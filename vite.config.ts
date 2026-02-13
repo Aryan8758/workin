@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      base: '/workin/',   // 👈 YE LINE ADD KARO
+      base: '/workin/',   
 
       server: {
         port: 3000,

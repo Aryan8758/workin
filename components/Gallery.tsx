@@ -13,7 +13,8 @@ const Gallery: React.FC = () => {
 
   const photos = Array.from({ length: totalPhotos }).map((_, i) => ({
     id: i,
-    url: `/photos/${i + 1}.jpg`, 
+    // FIXED: Added '.' before /photos to work on GitHub Pages
+    url: `./photos/${i + 1}.jpg`, 
     caption: captions[i % captions.length],
     rotation: Math.random() * 8 - 4 
   }));
@@ -42,6 +43,16 @@ const Gallery: React.FC = () => {
   return (
     <div className="flex flex-col items-center space-y-16 animate-in fade-in duration-1000 pb-40 w-full overflow-visible bg-pink-50/20 min-h-screen">
       
+      {/* Google Font Link for Romantic Style */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        @keyframes slide-up {
+          from { opacity: 0; transform: translateY(60px) scale(0.9); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .font-romantic { font-family: 'Dancing Script', cursive; }
+      `}</style>
+
       {/* Header */}
       <div className="text-center space-y-6 px-4 pt-16">
         <h2 className="text-5xl md:text-7xl font-romantic text-pink-600 font-bold drop-shadow-md">
@@ -62,25 +73,21 @@ const Gallery: React.FC = () => {
               transform: `rotate(${photo.rotation}deg)`
             }}
           >
-            {/* aspect-[4/5] se height badh gayi aur object-top se face safe rahega */}
             <div className="overflow-hidden bg-gray-50 aspect-[3/5] border border-gray-100 shadow-inner mb-6">
               <img 
                 src={photo.url} 
                 alt="Memory" 
-                // object-top sabse zaroori hai face bachane ke liye
                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x500?text=Check+Photo+Name'; }}
+                onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x500?text=Photo+Not+Found'; }}
               />
             </div>
             
-            {/* Caption Section */}
             <div className="absolute bottom-5 left-0 right-0 text-center px-4">
               <p className="text-pink-600 font-romantic text-2xl font-bold truncate">
                 {photo.caption}
               </p>
             </div>
             
-            {/* Tape Decoration */}
             <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-24 h-10 bg-pink-100/40 backdrop-blur-[2px] rotate-1 opacity-70 border border-white/50 pointer-events-none"></div>
           </div>
         ))}
@@ -101,14 +108,6 @@ const Gallery: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes slide-up {
-          from { opacity: 0; transform: translateY(60px) scale(0.9); }
-          to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .font-romantic { font-family: 'Dancing Script', cursive, serif; }
-      `}</style>
     </div>
   );
 };
